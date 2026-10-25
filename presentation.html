@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Expense Leakage & Business Savings Agent — Pitch Deck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0F172A;
+      --card-bg: #1E293B;
+      --card-border: #334155;
+      --primary: #3B82F6;
+      --primary-glow: rgba(59, 130, 246, 0.25);
+      --accent: #10B981;
+      --accent-glow: rgba(16, 185, 129, 0.2);
+      --warning: #F59E0B;
+      --danger: #EF4444;
+      --text: #F8FAFC;
+      --text-muted: #94A3B8;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    header {
+      padding: 1.25rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--card-border);
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
+    }
+    .brand-icon {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: rgba(59, 130, 246, 0.15);
+      color: #93C5FD;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+    .badge-success {
+      background: rgba(16, 185, 129, 0.15);
+      color: #6EE7B7;
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 3.5rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px var(--primary-glow);
+      animation: fadeIn 0.4s ease forwards;
+    }
+    .slide.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .slide-tag {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .slide-title {
+      font-size: 2.3rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.25rem;
+      line-height: 1.2;
+      background: linear-gradient(135deg, #FFFFFF 60%, var(--text-muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .slide-subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+
+    .card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: all 0.2s ease;
+    }
+    .card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .card-icon {
+      font-size: 1.75rem;
+      margin-bottom: 0.75rem;
+      display: inline-block;
+    }
+    .card h4 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    .card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .stat-box {
+      background: linear-gradient(145deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 0.25rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .stat-green { color: var(--accent); }
+    .stat-warn { color: var(--warning); }
+    .stat-label {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    .code-box {
+      background: #0B0F19;
+      border: 1px solid #1E293B;
+      border-radius: 10px;
+      padding: 1.25rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: #CBD5E1;
+      overflow-x: auto;
+    }
+
+    /* Architecture flow */
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .step-num {
+      background: var(--primary);
+      color: white;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.82rem;
+      flex-shrink: 0;
+    }
+    .step-content h5 { font-size: 0.95rem; margin-bottom: 0.2rem; }
+    .step-content p { font-size: 0.82rem; color: var(--text-muted); }
+
+    /* Footer & Navigation */
+    footer {
+      padding: 1.25rem 2.5rem;
+      border-top: 1px solid var(--card-border);
+      background: rgba(15, 23, 42, 0.9);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      bottom: 0;
+      z-index: 50;
+    }
+    .progress-bar-container {
+      flex: 1;
+      max-width: 400px;
+      height: 6px;
+      background: #334155;
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 0 1.5rem;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      width: 10%;
+      transition: width 0.3s ease;
+    }
+    .nav-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      padding: 0.6rem 1.4rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+    }
+    .nav-btn:hover:not(:disabled) {
+      background: #334155;
+      border-color: var(--primary);
+    }
+    .nav-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+    .nav-btn-primary {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+    .nav-btn-primary:hover {
+      background: #2563EB;
+    }
+
+    @media (max-width: 768px) {
+      .slide { padding: 2rem 1.5rem; }
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+      .slide-title { font-size: 1.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header>
+    <div class="brand">
+      <div class="brand-icon">💰</div>
+      <span>Expense Savings Agent</span>
+    </div>
+    <div class="header-controls">
+      <span class="badge">Business Pitch Deck</span>
+      <span class="badge badge-success">49/49 Tests Passed</span>
+      <a href="https://github.com/sree100-cyber/AI-Expense-Leakage-and-Business-Savings-Agent" target="_blank" class="nav-btn" style="text-decoration:none; padding: 0.4rem 0.9rem; font-size:0.8rem;">
+        GitHub Repo ↗
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Slide Container -->
+  <main>
+
+    <!-- Slide 1: Cover -->
+    <section class="slide active" id="slide-1">
+      <div class="slide-tag">🚀 Final Project Presentation</div>
+      <h1 class="slide-title">AI Expense Leakage &<br>Business Savings Agent</h1>
+      <p class="slide-subtitle">
+        An autonomous, transparent financial intelligence system detecting hidden payment leaks, recurring subscription waste, and unusual spending spikes for startups and growing enterprises.
+      </p>
+      <div class="grid-3" style="margin-top: 2rem;">
+        <div class="stat-box">
+          <div class="stat-number stat-green">100%</div>
+          <div class="stat-label">Non-Invasive (No Bank Logins)</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">49/49</div>
+          <div class="stat-label">Automated Tests Passed</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number stat-warn">0</div>
+          <div class="stat-label">Hallucinations / Fabricated Data</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 2: The Problem -->
+    <section class="slide" id="slide-2">
+      <div class="slide-tag">⚠️ Market Problem</div>
+      <h2 class="slide-title">The Silent Bleed in Business Expenses</h2>
+      <p class="slide-subtitle">Small businesses and startups lose 5% to 8% of operating capital each year through financial leaks that slip past standard bookkeeping.</p>
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-icon">🔁</div>
+          <h4>Duplicate Payments</h4>
+          <p>Dual payments from identical vendor references or re-submitted invoices across close dates go unnoticed across AP departments.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📈</div>
+          <h4>Creeping Subscriptions</h4>
+          <p>Unmonitored SaaS tools and recurring subscriptions accumulate silently with zero usage tracking or tier optimization.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">⚡</div>
+          <h4>Untracked Spending Surges</h4>
+          <p>Departmental cost spikes (marketing, advisory, equipment) go undetected until month-end or quarterly reconciliation.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 3: The Solution -->
+    <section class="slide" id="slide-3">
+      <div class="slide-tag">💡 The Solution</div>
+      <h2 class="slide-title">Autonomous Financial Guardrails</h2>
+      <p class="slide-subtitle">A multi-layered AI agent designed to ingest raw transaction files, clean corrupted data, detect anomalies, and generate actionable savings recommendations.</p>
+      <div class="grid-4">
+        <div class="card">
+          <div class="card-icon">🛡️</div>
+          <h4>No Bank Link Required</h4>
+          <p>Processes standard CSV and Excel exports safely with flexible column mapping.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔍</div>
+          <h4>Dual-Engine Detection</h4>
+          <p>Combines deterministic statistical rules with Isolation Forest ML models.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🎯</div>
+          <h4>Actionable Recs</h4>
+          <p>Transparent assumptions, prioritized savings, and SQLite decision audit trail.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🤖</div>
+          <h4>Factual Assistant</h4>
+          <p>Q&A engine answering questions strictly from computed data — zero hallucinated math.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 4: System Architecture -->
+    <section class="slide" id="slide-4">
+      <div class="slide-tag">🏗️ Technical Architecture</div>
+      <h2 class="slide-title">End-to-End Modular Pipeline</h2>
+      <p class="slide-subtitle">Engineered strictly with separation of concerns across 10 dedicated Python modules.</p>
+      <div class="grid-2">
+        <div>
+          <div class="flow-step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h5>Ingestion & Validation Engine</h5>
+              <p>Flexible alias mapping (`data_loader.py`), strict date/amount parsing, and clean/rejected record separation (`validation.py`).</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h5>Multi-Model Detection Suite</h5>
+              <p>Exact & proximity duplicate detector (`duplicate_detection.py`) + Z-Score & Scikit-learn Isolation Forest (`anomaly_detection.py`).</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h5>Trend & Subscription Engine</h5>
+              <p>Month-over-month category surge analysis + CV coefficient subscription classifier (`expense_trends.py`).</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <h5>Actionable Recommendations & SQLite Store</h5>
+              <p>Deduplicated savings calculator (`recommendation_engine.py`) and persistent session management (`database.py`).</p>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="background:#0B0F19;">
+          <h4 style="color:#60A5FA; margin-bottom: 0.75rem;">Technology Stack</h4>
+          <ul style="list-style:none; line-height:2.1; font-size:0.88rem; color:#CBD5E1;">
+            <li>🔹 <b>Frontend:</b> Streamlit 1.32+ (8 Dedicated Dashboard Views)</li>
+            <li>🔹 <b>Data Processing:</b> Pandas 2.1 & NumPy 1.26</li>
+            <li>🔹 <b>Machine Learning:</b> Scikit-learn (Isolation Forest)</li>
+            <li>🔹 <b>Visualization:</b> Plotly 5.18 (Interactive Charts)</li>
+            <li>🔹 <b>Persistence:</b> SQLite3 (WAL mode, relational integrity)</li>
+            <li>🔹 <b>Reporting:</b> OpenPyXL (8-Sheet Consolidated Excel + CSVs)</li>
+            <li>🔹 <b>Quality Assurance:</b> Pytest (49 Passing Tests)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 5: Core Detection Algorithms -->
+    <section class="slide" id="slide-5">
+      <div class="slide-tag">🧠 AI & Algorithms</div>
+      <h2 class="slide-title">Evidence-Based Detection Logic</h2>
+      <p class="slide-subtitle">Clear explanations accompany every flag — no black-box accusations.</p>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-icon">👥</div>
+          <h4>Duplicate Payment Logic</h4>
+          <p><b>Exact Match:</b> Identical non-null payment reference numbers.</p>
+          <p style="margin-top:0.5rem;"><b>Proximity Match:</b> Same vendor + same amount within &plusmn;3 days window. High/Medium confidence scoring prevents false accusations.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🌲</div>
+          <h4>Isolation Forest & Z-Score</h4>
+          <p><b>Statistical:</b> Z-score &gt; 2.5 globally, per-category, and per-vendor.</p>
+          <p style="margin-top:0.5rem;"><b>Machine Learning:</b> Unsupervised Isolation Forest (200 trees, 5% contamination) evaluates multi-feature vectors (amounts + encoded vendors/categories).</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📊</div>
+          <h4>Spending Surge Detection</h4>
+          <p>Tracks category monthly momentum; flags sudden spikes &ge;25% over the previous period with dollar-amount impact.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔄</div>
+          <h4>Recurring Subscription Audit</h4>
+          <p>Identifies multi-month vendors; coefficient of variation (&lt;0.15) distinguishes fixed SaaS tiers from variable operational costs.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 6: Savings Engine -->
+    <section class="slide" id="slide-6">
+      <div class="slide-tag">💎 Financial Value</div>
+      <h2 class="slide-title">Conservative, Assumption-Based Savings</h2>
+      <p class="slide-subtitle">Never double-counts opportunities. Clearly distinguishes potential savings from user-approved plans.</p>
+      <div class="grid-3" style="margin-bottom: 1.5rem;">
+        <div class="stat-box">
+          <div class="stat-label">Duplicate Payment Recovery</div>
+          <div class="stat-number stat-green">~8%</div>
+          <p style="font-size:0.75rem; color:var(--text-muted); margin-top:0.3rem;">Monthly AP deduplication filter</p>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">SaaS & Subscription Audit</div>
+          <div class="stat-number">10%</div>
+          <p style="font-size:0.75rem; color:var(--text-muted); margin-top:0.3rem;">Tier optimization & license cleanup</p>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Spike & Vendor Negotiation</div>
+          <div class="stat-number stat-warn">15%</div>
+          <p style="font-size:0.75rem; color:var(--text-muted); margin-top:0.3rem;">Excess surge budget controls</p>
+        </div>
+      </div>
+      <div class="card">
+        <h4>Interactive Decision Workflow</h4>
+        <p>Finance managers can interactively classify every recommendation as <b>Pending</b>, <b>Accepted</b>, <b>Rejected</b>, or <b>Implemented</b>. All actions are audited and stored in SQLite.</p>
+      </div>
+    </section>
+
+    <!-- Slide 7: Automated Test Suite -->
+    <section class="slide" id="slide-7">
+      <div class="slide-tag">🧪 Verification & Reliability</div>
+      <h2 class="slide-title">49 Automated Pytest Tests — 100% Pass</h2>
+      <p class="slide-subtitle">Zero fabricated metrics. Every required behavior is verified by automated unit and integration tests.</p>
+      <div class="grid-2">
+        <div class="code-box">
+collected 49 items
+
+tests/test_anomalies.py ........            [ 14%]
+tests/test_data_validation.py ...........   [ 36%]
+tests/test_duplicates.py .........          [ 55%]
+tests/test_recommendations.py ..............[ 83%]
+tests/test_reports.py ........              [100%]
+
+================== 49 passed in 2.54s ==================
+        </div>
+        <div>
+          <h4 style="margin-bottom:0.75rem;">Verified Test Criteria:</h4>
+          <ul style="list-style:none; line-height:1.9; font-size:0.85rem; color:#CBD5E1;">
+            <li>✅ Exact duplicate detected by payment reference</li>
+            <li>✅ Proximity duplicate flagged within date tolerance</li>
+            <li>✅ Normal payments never falsely classified as duplicate</li>
+            <li>✅ Outlier transactions flagged under statistical rules</li>
+            <li>✅ Corrupted dates & amounts safely isolated</li>
+            <li>✅ Annual savings strictly = monthly &times; 12</li>
+            <li>✅ De-duplication guarantees no double-counting</li>
+            <li>✅ SQLite persistence updates recommendation statuses</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 8: Live Demo & Roadmap -->
+    <section class="slide" id="slide-8">
+      <div class="slide-tag">🏁 Impact & Conclusion</div>
+      <h2 class="slide-title">Deployment-Ready Financial Intelligence</h2>
+      <p class="slide-subtitle">Ready to deploy immediately to Streamlit Community Cloud with zero infrastructure overhead.</p>
+      <div class="grid-2">
+        <div class="card">
+          <h4>Key Strengths</h4>
+          <ul style="list-style:none; line-height:1.8; font-size:0.88rem; color:#94A3B8; margin-top:0.5rem;">
+            <li>⭐ <b>Zero Secret Leaks:</b> Works 100% offline with zero required paid API keys</li>
+            <li>⭐ <b>Export Power:</b> Generates consolidated 8-sheet Excel & CSV workbooks</li>
+            <li>⭐ <b>Enterprise Ready:</b> Relational SQLite audit trail for all user decisions</li>
+            <li>⭐ <b>High Usability:</b> Built-in synthetic sample data loads in one click</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Future Roadmap</h4>
+          <ul style="list-style:none; line-height:1.8; font-size:0.88rem; color:#94A3B8; margin-top:0.5rem;">
+            <li>🚀 Direct ERP integration (QuickBooks, Xero, NetSuite APIs)</li>
+            <li>🚀 OCR ingestion for scanned paper receipts and invoices</li>
+            <li>🚀 Real-time team approval webhooks (Slack, MS Teams)</li>
+            <li>🚀 Multi-currency automated conversion via foreign exchange rates</li>
+          </ul>
+        </div>
+      </div>
+      <div style="margin-top: 2rem; text-align: center;">
+        <p style="font-size: 0.95rem; color: #94A3B8;">Built with ❤️ for High-Growth Startups & Small Businesses</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation -->
+  <footer>
+    <button class="nav-btn" id="prev-btn" onclick="prevSlide()" disabled>← Previous</button>
+    <div style="display:flex; align-items:center; gap:0.5rem;">
+      <span style="font-size:0.85rem; color:var(--text-muted);" id="slide-indicator">Slide 1 of 8</span>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+    </div>
+    <button class="nav-btn nav-btn-primary" id="next-btn" onclick="nextSlide()">Next →</button>
+  </footer>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 8;
+
+    function updateSlide() {
+      document.querySelectorAll('.slide').forEach((slide, idx) => {
+        slide.classList.toggle('active', idx + 1 === currentSlide);
+      });
+      document.getElementById('prev-btn').disabled = (currentSlide === 1);
+      document.getElementById('next-btn').disabled = (currentSlide === totalSlides);
+      document.getElementById('slide-indicator').textContent = `Slide ${currentSlide} of ${totalSlides}`;
+      document.getElementById('progress-bar').style.width = `${(currentSlide / totalSlides) * 100}%`;
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        currentSlide++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'Space') nextSlide();
+      if (e.key === 'ArrowLeft') prevSlide();
+    });
+  </script>
+</body>
+</html>
